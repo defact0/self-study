@@ -2,11 +2,11 @@
 
 ---
 
-![lec15-01](.\img\lec15-01.png)
+![lec15-01](./img/lec15-01.png)
 
-![lec15-02](.\img\lec15-02.png)
+![lec15-02](./img/lec15-02.png)
 
-![lec15-03](.\img\lec15-03.png)
+![lec15-03](./img/lec15-03.png)
 
 답안 예시
 
@@ -34,13 +34,13 @@ print(count)
 
 
 
-![lec15-04](.\img\lec15-04.png)
+![lec15-04](./img/lec15-04.png)
 
-![lec15-05](.\img\lec15-05.png)
+![lec15-05](./img/lec15-05.png)
 
-![lec15-06](.\img\lec15-06.png)
+![lec15-06](./img/lec15-06.png)
 
-![lec15-07](.\img\lec15-07.png)
+![lec15-07](./img/lec15-07.png)
 
 문제 해결 아이디어
 
@@ -85,11 +85,11 @@ print(result)
 
 
 
-![lec15-08](.\img\lec15-08.png)
+![lec15-08](./img/lec15-08.png)
 
 - 문자는 순서대로 정렬을 하고, 1+5+7=13을 출력한다.
 
-![lec15-09](.\img\lec15-09.png)
+![lec15-09](./img/lec15-09.png)
 
 문제해결 아이디어
 
