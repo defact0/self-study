@@ -4,5 +4,8 @@
 #### :computer: [coding-test](./coding-test)
 
 - 코딩 테스트를 위한 공부 (언어는 파이썬)
-- 유튜브 강의를 참고하며 공부중입니다.
+
+#### :ship: [kubernetes](./kubernetes)
+
+- 쿠버네티스 공부
 
