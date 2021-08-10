@@ -7,6 +7,7 @@
 - [Book](./Book)
 
   - 이것이 코딩 테스트다 책 공부
+  - 파이썬 코드 이해 ([링크](http://pythontutor.com/))
 
 - [CodeUp](.\CodeUp)
 
