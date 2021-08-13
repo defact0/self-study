@@ -13,5 +13,9 @@
 
   - [문제집 / Python 기초 100제](https://www.codeup.kr/problemsetsol.php?psid=33)
 
+- [Practice](.\Practice)
+
+  - 온라인 코딩테스트 연습문제 공부
+
   
 
