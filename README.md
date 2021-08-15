@@ -9,3 +9,7 @@
 
 - 쿠버네티스 공부
 
+#### :orange_book: [theory](./theory)
+
+- 이론 공부
+

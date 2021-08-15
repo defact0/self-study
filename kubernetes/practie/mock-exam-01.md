@@ -20,27 +20,15 @@ Solution
    - Name: nginx-pod
    - Image: nginx:alpine
 
-   `nginx-pod.yaml`를 만든다.
+   그냥 아래 명령 한줄로 Pod를 만든다.
 
-   ```yaml
-   apiVersion: v1
-   kind: Pod
-   metadata:
-     creationTimestamp: null
-     labels:
-       run: nginx-pod
-     name: nginx-pod
-   spec:
-     containers:
-     - image: nginx:alpine
-       name: nginx-pod
-       resources: {}
-     dnsPolicy: ClusterFirst
-     restartPolicy: Always
-   status: {}
+   ```shell
+   kubectl run nginx-pod --image=nginx:alpine
    ```
 
-   yaml 파일을 만들지 않고 직접 붙여넣기 해서 pod을 생성하는 방법도 있다.
+   
+
+   `nginx-pod.yaml`을 만들지 않고 직접 붙여넣기 해서 pod을 생성하는 방법도 있다.
 
    ```shell
    root@controlplane:~# cat << EOF | kubectl apply -f -
@@ -155,6 +143,14 @@ Solution
    - 
      Name: static-busybox
    - Image: busybox
+
+   ```shell
+   kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -oyaml --command -- sleep 1000 > ./static-busybox.yaml
+   
+   kubectl apply -f static-busybox.yaml
+   ```
+
+   
 
    ```yaml
    cat << EOF | kubectl apply -f -
