@@ -20,18 +20,16 @@ Solution
    - Name: nginx-pod
    - Image: nginx:alpine
 
-   그냥 아래 명령 한줄로 Pod를 만든다.
+   >  그냥 아래 명령 한줄로 Pod를 만든다.
 
    ```shell
    kubectl run nginx-pod --image=nginx:alpine
    ```
 
-   
-
-   `nginx-pod.yaml`을 만들지 않고 직접 붙여넣기 해서 pod을 생성하는 방법도 있다.
+   > 또는,  `nginx-pod.yaml`을 만들지 않고 직접 붙여넣기 해서 pod을 생성하는 방법도 있다.
 
    ```shell
-   root@controlplane:~# cat << EOF | kubectl apply -f -
+root@controlplane:~# cat << EOF | kubectl apply -f -
    > apiVersion: v1
    > kind: Pod
    > metadata:
@@ -51,7 +49,7 @@ Solution
    pod/nginx-pod created
    root@controlplane:~# 
    ```
-
+   
    
 
 2. Deploy a `messaging` pod using the `redis:alpine` image with the labels set to `tier=msg`.
@@ -60,6 +58,8 @@ Solution
      Pod Name: messaging
    - Image: redis:alpine
    - Labels: tier=msg
+
+   > 1번 문제와 동일하나 `labels`를 추가하여 pod를 만드는 문제
 
    ```shell
    kubectl run messaging --image=redis:alpine --labels=tier=msg
@@ -71,6 +71,8 @@ Solution
 
    - Namespace: apx-x9984574
 
+   > 네임스페이스는 create 명령을 사용하여 만든다.
+
    ```shell
    kubectl create namespace apx-x9984574
    ```
@@ -78,6 +80,8 @@ Solution
    
 
 4. Get the list of nodes in JSON format and store it in a file at `/opt/outputs/nodes-z3444kd9.json`.
+
+   > JSON 포맷은 `-o json` 옵션을 통해 출력 할 수 있고 이것을 리눅스의 출력 리다이렉션을 통해 특정 파일에 저장을 하는 문제
 
    ```shell
    kubectl get nodes -o json > /opt/outputs/nodes-z3444kd9.json
@@ -92,6 +96,8 @@ Solution
    - Type: ClusterIp
    - Use the right labels
 
+   > 기존에 생성된 messaging pod에 messaging-service 이라는 이름의 Service 리소스를 설정하기 ([참고](https://kubernetes.io/ko/docs/tutorials/stateless-application/expose-external-ip-address/))
+
    ```shell
    kubectl expose pod messaging --port=6379 --name messaging-service
    ```
@@ -105,7 +111,9 @@ Solution
    - Image: kodekloud/webapp-color
    - Replicas: 2
 
-   <u>*yaml 파일 생성 없이 직접 만든다.`공식사이트에서 검색하여 해결할 수 있는 방법은??`*</u>
+   > kubectl create deployment hr-web-app --image=kodekloud/webapp-color --replicas=2
+
+   아래는 udemy 풀이
 
    ```yaml
    cat << EOF | kubectl apply -f -
@@ -143,6 +151,8 @@ Solution
    - 
      Name: static-busybox
    - Image: busybox
+
+   > 이거는 어떻게 풀든지 오답으로 채점되는 것 같다.
 
    ```shell
    kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -oyaml --command -- sleep 1000 > ./static-busybox.yaml
@@ -218,6 +228,8 @@ Solution
     - Port: 8080
     - NodePort: 30082
 
+    > 공식 홈페이지에서 `nodePort`로 검색하여 해결
+
     ```yaml
     cat << EOF | kubectl apply -f -
     apiVersion: v1
@@ -252,9 +264,11 @@ Solution
     - node 정보를 json 형태로 출력 해 본다.
 
       ```shell
+      # 아래 명령을 통해 출력되는 json full 구조에서 jsonpath를 직접 찾는 연습이 필요
       kubectl get nodes -o json
-      kubectl get nodes -o json | grep "osImage"
+      
       # "osImage": "Ubuntu 18.04.5 LTS",
+      kubectl get nodes -o json | grep "osImage"
       ```
 
     - 공식 홈페이지에서 `jsonpath`로 검색하여 정보를 찾는다 [링크](https://kubernetes.io/ko/docs/reference/kubectl/cheatsheet/)
@@ -278,6 +292,8 @@ Solution
     - Access modes: ReadWriteMany
     - Host Path: /pv/data-analytics
 
+    > 공식 홈페이지에서 `hostPath`를 검색하여 작성함
+    
     ```yaml
     cat << EOF | kubectl apply -f -
     apiVersion: v1
@@ -294,6 +310,6 @@ Solution
           path: /pv/data-analytics
     EOF
     ```
-
+    
     
 
