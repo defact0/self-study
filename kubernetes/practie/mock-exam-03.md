@@ -1,4 +1,4 @@
-Mock Exam - 2
+Mock Exam - 3
 
 - Mock Test Link - https://uklabs.kodekloud.com/topic/mock-exam-3-3/
 - https://github.com/kodekloudhub/certified-kubernetes-administrator-course
