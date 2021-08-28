@@ -202,5 +202,38 @@ Q13. You shouldn't have to copy and paste the token each time. The Dashboard app
 Edit the deployment to change ServiceAccount from 'default' to 'dashboard-sa'
 
 ```shell
+# deployment를 수정하여
+# default ServiceAccount를 dashboard-sa로 변경해라라는 것인데...
+# Pod에 spec.serviceAccount: service-account-name과 같은 형식으로 지정
+# "service-account-token-volume-projection"링크를 참조하여 Pod부분을 수정한다.
+
+# ---------------------------------------------------------
+# describe serviceaccounts dashboard-sa 
+controlplane $ kubectl describe serviceaccounts dashboard-sa 
+Name:                dashboard-sa
+Namespace:           default
+Labels:              <none>
+Annotations:         <none>
+Image pull secrets:  <none>
+Mountable secrets:   dashboard-sa-token-h4twl
+Tokens:              dashboard-sa-token-h4twl
+Events:              <none>
+
+# ---------------------------------------------------------
+# edit deployments.apps web-dashboard
+controlplane $ kubectl edit deployments.apps web-dashboard
+# serviceAccountName: dashboard-sa 추가 후 저장
+    spec:
+      containers:
+      ...
+      serviceAccount: dashboard-sa
+      serviceAccountName: dashboard-sa
 ```
 
+- https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#service-account-token-volume-projection
+
+---
+
+Q14. Refresh the Dashboard application UI and you should now see the PODs listed automatically.
+
+- My Kubernetes Dashboard 웹 페이지를 새로고침하면 dashboard-sa 으로 등록된 Pod가 정상출력된다.
