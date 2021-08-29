@@ -78,15 +78,15 @@ Security
   - [Service Accounts Test](./practice/160-PracticeTest-ServiceAccounts.md)
   - [Image Security Test](./practice/161-PracticeTest-ImageSecurity.md)
   - [Security Contexts Test](./practice/163-PracticeTest-SecurityContexts.md)
-  - [Network Policy](./practice/166-PracticeTest-NetworkPolicy.md)
+  - [Network Policy Test](./practice/166-PracticeTest-NetworkPolicy.md)
 
 Storage
 
 - 이론
   - [Storage](./book/Storage.md)
 - 연습
-  - [Persistent Volumes and Persistent Volume Claims](./practice/178-PracticeTest-PersistentVolumesandPersistentVolumeClaims.md)
-  - Storage Class
+  - [Persistent Volumes and Persistent Volume Claims Test](./practice/178-PracticeTest-PersistentVolumesandPersistentVolumeClaims.md)
+  - [Storage Class Test](./practice/183-PracticeTest-StorageClass.md)
 
 Networking
 
@@ -110,7 +110,7 @@ Install "Kubernetes the kubeadm way"
 Troubleshooting
 
 - 실습
-  - Application Failure
+  - [Application Failure Test](./practice/237-PracticeTest-ApplicationFailure.md)
   - Control Plane Failure
   - Worker Node Failure
   - Troubleshoot Network

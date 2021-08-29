@@ -6,8 +6,6 @@ Practice Test - Network Policy
 
 Q1. How many network policies do you see in the environment?
 
-![](https://e7988b28ad784e25.labs.kodekloud.com/images/kubernetes-ckad-network-policies-1.jpg)
-
 - We have deployed few web applications, services and network policies. Inspect the environment.
 
 ```shell
@@ -64,8 +62,6 @@ Spec:
 
 Q5. What is the impact of the rule configured on this Network Policy?
 
-![](https://e7988b28ad784e25.labs.kodekloud.com/images/kubernetes-ckad-network-policies-5.jpg)
-
 ```shell
 root@controlplane:~# kubectl describe networkpolicy
 Name:         payroll-policy
@@ -120,8 +116,6 @@ Q7. Access the UI of these applications using the link given above the terminal.
 
 Q8. Perform a connectivity test using the User Interface in these Applications to access the `payroll-service` at port `8080`.
 
-![](https://e7988b28ad784e25.labs.kodekloud.com/images/kubernetes-ckad-network-policies-8.jpg)
-
 - Only Internal application can access payroll service
 
 ---
@@ -133,8 +127,6 @@ Q9. Perform a connectivity test using the User Interface of the Internal Applica
 ---
 
 Q10. Create a network policy to allow traffic from the `Internal` application only to the `payroll-service` and `db-service`.
-
-![](https://e7988b28ad784e25.labs.kodekloud.com/images/kubernetes-ckad-network-policies-9.jpg)
 
 - Use the spec given on the below. You might want to enable ingress traffic to the pod to test your rules in the UI.
   - Policy Name: internal-policy
