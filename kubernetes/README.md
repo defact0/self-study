@@ -105,21 +105,21 @@ Networking
 Install "Kubernetes the kubeadm way"
 
 - 실습
-  - Deploy a Kubernetes Cluster using Kubeadm
+  - [Deploy a Kubernetes Cluster using Kubeadm](./practice/231-PracticeTest-DeployaKubernetesClusterusingKubeadm.md)
 
 Troubleshooting
 
 - 실습
   - [Application Failure Test](./practice/237-PracticeTest-ApplicationFailure.md)
-  - Control Plane Failure
-  - Worker Node Failure
-  - Troubleshoot Network
+  - [Control Plane Failure Test](./practice/240-PracticeTest-ControlPlaneFailure.md)
+  - [Worker Node Failure Test](./practice/243-PracticeTest-WorkerNodeFailure.md)
+  - [Troubleshoot Network Test](./practice/246-PracticeTest-TroubleshootNetwork.md)
 
 Other Topics
 
+- JSON PATH
 - 실습
-  - JSON PATH
-  - Advanced Kubectl Commands
+  - [Advanced Kubectl Commands Test](./practice/250-PracticeTest-AdvancedKubectlCommands.md)
 
 Helm
 
@@ -128,7 +128,7 @@ Helm
 
 Mock Exams
 
-- Lightning Lab - 1
+- [LightningLab-1](./practice/253-LightningLab-1.md)
 - [mock-exam-01](./practice/mock-exam-01.md)
 - [mock-exam-02](./practice/mock-exam-02.md)
 - [mock-exam-03](./practice/mock-exam-03.md)
