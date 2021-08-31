@@ -2,7 +2,7 @@
 
 - [이론](./book)
   - 핵심만 콕! 쿠버네티스 책 구입 후 공부 중
-  - Certified Kubernetes Administrator (CKA) with Practice Tests
+  - Certified Kubernetes Administrator (CKA) with Practices
 - [실습](./practice)
   - KodeCloud 연습
 
@@ -16,53 +16,53 @@ Core Concepts
   - [ReplicaSets](./book/ReplicaSets.md)
   - [Services](./book/Services.md)
 - 연습
-  - [Pods Test](./practice/025-PracticeTest-Pods.md)
-  - [ReplicaSets Test](./practice/028-PracticeTest-ReplicaSets.md)
-  - [Deployments Test](./practice/032-PracticeTest-Deployments.md)
-  - [Namespaces Test](./practice/035-PracticeTest-Namespaces.md)
-  - [Services Test](./practice/040-PracticeTest-Services.md)
-  - [Imperative Commands Test](./practice/044-PracticeTest-ImperativeCommands.md)
+  - [Pods](./practice/025-PracticeTest-Pods.md)
+  - [ReplicaSets](./practice/028-PracticeTest-ReplicaSets.md)
+  - [Deployments](./practice/032-PracticeTest-Deployments.md)
+  - [Namespaces](./practice/035-PracticeTest-Namespaces.md)
+  - [Services](./practice/040-PracticeTest-Services.md)
+  - [Imperative Commands](./practice/044-PracticeTest-ImperativeCommands.md)
 
 Scheduling
 
 - 이론
   - [Scheduling](./book/Scheduling.md)
 - 연습
-  - [Manual Scheduling Test](./practice/052-PracticeTest-ManualScheduling.md)
-  - [Labels and Selectors Test](./practice/055-PracticeTest-LabelsandSelectors.md)
-  - [Taints and Tolerations Test](./practice/058-PracticeTest-TaintsandTolerations.md)
-  - [Node Affinity Test](./practice/062-PracticeTest-NodeAffinity.md)
-  - [Resource Requirements and Limits Test](./practice/068-PracticeTest-ResourceRequirementsandLimits.md)
-  - [DaemonSets Test](./practice/071-PracticeTest-DaemonSets.md)
-  - [Static Pods Test](./practice/074-PracticeTest-StaticPods.md)
-  - [Multiple Schedulers Test](./practice/077-PracticeTest-MultipleSchedulers.md)
+  - [Manual Scheduling](./practice/052-PracticeTest-ManualScheduling.md)
+  - [Labels and Selectors](./practice/055-PracticeTest-LabelsandSelectors.md)
+  - [Taints and Tolerations](./practice/058-PracticeTest-TaintsandTolerations.md)
+  - [Node Affinity](./practice/062-PracticeTest-NodeAffinity.md)
+  - [Resource Requirements and Limits](./practice/068-PracticeTest-ResourceRequirementsandLimits.md)
+  - [DaemonSets](./practice/071-PracticeTest-DaemonSets.md)
+  - [Static Pods](./practice/074-PracticeTest-StaticPods.md)
+  - [Multiple Schedulers](./practice/077-PracticeTest-MultipleSchedulers.md)
 
 Logging & Monitoring
 
 - 이론
 - 연습
-  - [Monitoring Test](./practice/084-PracticeTest-Monitoring.md)
-  - [Monitor Application Logs Test](./practice/087-PracticeTest-MonitorApplicationLogs.md)
+  - [Monitoring](./practice/084-PracticeTest-Monitoring.md)
+  - [Monitor Application Logs](./practice/087-PracticeTest-MonitorApplicationLogs.md)
 
 Application Lifecycle Management
 
 - 이론
 - 연습
-  - [Rolling Updates and Rollbacks Test](./practice/093-PracticeTest-RollingUpdatesandRollbacks.md)
-  - [Commands and Arguments Test](./practice/098-PracticeTest-CommandsandArguments.md)
-  - [Environment Variables Test](./practice/102-PracticeTest-EnvironmentVariables.md)
-  - [Secrets Test](./practice/106-PracticeTest-Secrets.md)
-  - [Multi Container PODs Test](./practice/110-PracticeTest-MultiContainerPODs.md)
-  - [Init Containers Test](./practice/114-PracticeTest-InitContainers.md)
+  - [Rolling Updates and Rollbacks](./practice/093-PracticeTest-RollingUpdatesandRollbacks.md)
+  - [Commands and Arguments](./practice/098-PracticeTest-CommandsandArguments.md)
+  - [Environment Variables](./practice/102-PracticeTest-EnvironmentVariables.md)
+  - [Secrets](./practice/106-PracticeTest-Secrets.md)
+  - [Multi Container PODs](./practice/110-PracticeTest-MultiContainerPODs.md)
+  - [Init Containers](./practice/114-PracticeTest-InitContainers.md)
 
 Cluster Maintenance
 
 - 이론
   - [Cluster](./book/Cluster.md)
 - 연습
-  - [OS Upgrades Test](./practice/121-PracticeTest-OSUpgrades.md)
-  - [Cluster Upgrade Test](./practice/127-PracticeTest-ClusterUpgrade.md)
-  - [Backup and Restore Methods Test](./practice/131-PracticeTest-BackupandRestoreMethods.md)
+  - [OS Upgrades](./practice/121-PracticeTest-OSUpgrades.md)
+  - [Cluster Upgrade](./practice/127-PracticeTest-ClusterUpgrade.md)
+  - [Backup and Restore Methods](./practice/131-PracticeTest-BackupandRestoreMethods.md)
 
 Security
 
@@ -70,37 +70,37 @@ Security
   - [Security](./book/Security.md)
   - [SerivceAccount](./book/SerivceAccount.md)
 - 연습
-  - [View Certificates Test](./practice/147-PracticeTest-ViewCertificates.md)
-  - [Certificates API Test](./practice/149-PracticeTest-CertificatesAPI.md)
-  - [KubeConfig Test](./practice/151-PracticeTest-KubeConfig.md)
-  - [RBAC Test](./practice/156-PracticeTest-RBAC.md)
-  - [Cluster Roles and Role Bindings Test](./practice/158-PracticeTest-ClusterRolesandRoleBindings.md)
-  - [Service Accounts Test](./practice/160-PracticeTest-ServiceAccounts.md)
-  - [Image Security Test](./practice/161-PracticeTest-ImageSecurity.md)
-  - [Security Contexts Test](./practice/163-PracticeTest-SecurityContexts.md)
-  - [Network Policy Test](./practice/166-PracticeTest-NetworkPolicy.md)
+  - [View Certificates](./practice/147-PracticeTest-ViewCertificates.md)
+  - [Certificates API](./practice/149-PracticeTest-CertificatesAPI.md)
+  - [KubeConfig](./practice/151-PracticeTest-KubeConfig.md)
+  - [RBAC](./practice/156-PracticeTest-RBAC.md)
+  - [Cluster Roles and Role Bindings](./practice/158-PracticeTest-ClusterRolesandRoleBindings.md)
+  - [Service Accounts](./practice/160-PracticeTest-ServiceAccounts.md)
+  - [Image Security](./practice/161-PracticeTest-ImageSecurity.md)
+  - [Security Contexts](./practice/163-PracticeTest-SecurityContexts.md)
+  - [Network Policy](./practice/166-PracticeTest-NetworkPolicy.md)
 
 Storage
 
 - 이론
   - [Storage](./book/Storage.md)
 - 연습
-  - [Persistent Volumes and Persistent Volume Claims Test](./practice/178-PracticeTest-PersistentVolumesandPersistentVolumeClaims.md)
-  - [Storage Class Test](./practice/183-PracticeTest-StorageClass.md)
+  - [Persistent Volumes and Persistent Volume Claims](./practice/178-PracticeTest-PersistentVolumesandPersistentVolumeClaims.md)
+  - [Storage Class](./practice/183-PracticeTest-StorageClass.md)
 
 Networking
 
 - 이론
   - [Ingress](./book/Ingress.md)
 - 실습
-  - Explore Kubernetes Environment
-  - Explore CNI Weave
-  - Deploy Network Solution
-  - Networking Weave
-  - Service Networking
-  - Explore DNS
-  - Ingress - 1
-  - Ingress - 2
+  - [Explore Kubernetes Environment](./practice/195-PracticeTest-ExploreKubernetesEnvironment.md)
+  - [Explore CNI Weave](./practice/200-PracticeTest-ExploreCNIWeave.md)
+  - [Deploy Network Solution](./practice/202-PracticeTest-DeployNetworkSolution.md)
+  - [Networking Weave](./practice/205-PracticeTest-NetworkingWeave.md)
+  - [Service Networking](./practice/208-PracticeTest-ServiceNetworking.md)
+  - [Explore DNS](./practice/212-PracticeTest-ExploreDNS.md)
+  - [Ingress - 1](./practice/216-PracticeTest-Ingress-1.md)
+  - [Ingress - 2](./practice/219-PracticeTest-Ingress-2.md)
 
 Install "Kubernetes the kubeadm way"
 
@@ -110,16 +110,16 @@ Install "Kubernetes the kubeadm way"
 Troubleshooting
 
 - 실습
-  - [Application Failure Test](./practice/237-PracticeTest-ApplicationFailure.md)
-  - [Control Plane Failure Test](./practice/240-PracticeTest-ControlPlaneFailure.md)
-  - [Worker Node Failure Test](./practice/243-PracticeTest-WorkerNodeFailure.md)
-  - [Troubleshoot Network Test](./practice/246-PracticeTest-TroubleshootNetwork.md)
+  - [Application Failure](./practice/237-PracticeTest-ApplicationFailure.md)
+  - [Control Plane Failure](./practice/240-PracticeTest-ControlPlaneFailure.md)
+  - [Worker Node Failure](./practice/243-PracticeTest-WorkerNodeFailure.md)
+  - [Troubleshoot Network](./practice/246-PracticeTest-TroubleshootNetwork.md)
 
 Other Topics
 
-- JSON PATH
+- [JSON PATH](./book/JSONPath.md)
 - 실습
-  - [Advanced Kubectl Commands Test](./practice/250-PracticeTest-AdvancedKubectlCommands.md)
+  - [Advanced Kubectl Commands](./practice/250-PracticeTest-AdvancedKubectlCommands.md)
 
 Helm
 
