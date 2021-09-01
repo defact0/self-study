@@ -12,31 +12,29 @@ Upgrade `controlplane` node first and drain node `node01` before upgrading it. P
 - pods 'gold-nginx' running on controlplane?
 
 ```shell
-On Master Node:-
-
+# ----------------------------------------------
+# On the controlplane node:
 kubectl drain controlplane --ignore-daemonsets
-apt-get install kubeadm=1.19.0-00
-kubeadm  upgrade plan
-kubeadm  upgrade apply v1.19.0
-apt-get install kubelet=1.19.0-00
-systemctl daemon-reload
-systemctl restart kubelet
-kubectl uncordon controlplane
+apt update
+apt-get install -y kubeadm=1.20.0-00
+kubeadm upgrade apply v1.20.0
+apt-get install -y kubelet=1.20.0-00
+kubectl uncordon controlplane 
 kubectl drain node01 --ignore-daemonsets
 
+# ----------------------------------------------
+# On the node01 node:
+ssh node01
+apt update
+apt-get install -y kubeadm=1.20.0-00
+kubeadm upgrade node --kubelet-version v1.20.0
+apt-get install -y kubelet=1.20.0-00
 
-On Worker Node:-
 
-apt-get install kubeadm=1.19.0-00
-kubeadm upgrade node --kubelet-version=v1.19.0
-apt-get install kubelet=1.19.0-00
-systemctl daemon-reload
-systemctl restart kubelet     
-
-Back on Master Node:-
-
+# ----------------------------------------------
+# Back on the controlplane node:
 kubectl uncordon node01
-kubectl get pods -o wide | grep gold (make sure this is scheduled on master node)
+kubectl get pods -o wide | grep gold
 ```
 
 ---
@@ -62,16 +60,10 @@ Q3. A kubeconfig file called `admin.kubeconfig` has been created in `/root/CKA`.
 - Fix /root/CKA/admin.kubeconfig
 
 ```shell
-Make sure the port for the kube-apiserver is correct.
-
-Change port from 2379 to 6443 using below command
-
+# Make sure the port for the kube-apiserver is correct.
+# Change port from 2379 to 6443 using below command
 vi /root/CKA/admin.kubeconfig
-
-Now replace the port 2379 with 6443
-
-Run:
-
+# Now replace the port 2379 with 6443
 kubectl cluster-info --kubeconfig /root/CKA/admin.kubeconfig
 ```
 

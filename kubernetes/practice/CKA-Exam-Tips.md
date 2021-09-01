@@ -4,11 +4,39 @@
 
 ---
 
+**multiple-context**
+
+> CKA 시험에서는 하나의 클러스터가 아닌 여러개의 클러스터 환경에서 시험이 진행된다.
+> 시험 문제마다 작업해야하는 클러스터 환경이 다르므로 엉뚱한 환경에서 문제를 풀이하는 일이 없어야 한다.
+> 문제 첫줄에 해당 클러스터 이름을 확인하고 문제를 진행해야 한다.
+
+```shell
+# ------------------------------------
+# cluster list
+root@controlplane:~# kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   
+
+# ------------------------------------
+# Switched to context
+root@controlplane:~# kubectl config use-context kubernetes-admin@kubernetes 
+Switched to context "kubernetes-admin@kubernetes".
+
+# ------------------------------------
+# current-context
+root@controlplane:~# kubectl config current-context
+```
+
+
+
+---
+
 **Kubernetes.. ETCD Backup and Restore**
 
 - ETCD
   - key-value store, secure and fast
   - port 2379
+  - ETCD 백업 및 복원 ([링크](https://github.com/defact0/self-study/blob/main/kubernetes/practice/131-PracticeTest-BackupandRestoreMethods.md))
 
 ```shell
 # ----------------------------------------------
@@ -34,7 +62,9 @@ ETCDCTL_API=3 etcdctl --data-dir=/var/lib/etcd-backup snapshot restore /opt/snap
 cd /etc/kubernetes/manifestes/
 vi etcd.yaml
 # volumes 항목에 name이 etcd-data 부분이 있는데 path를 /var/lib/etcd-backup 으로 수정한다.
-#
+# spec.volumes에 있는 etcd-data 부분을 수정해야한다. (Local Side)
+# spec.containers.volumeMounts 부분은 수정하면 안된다. (Container Side)
+# 
 # 정리하자면,
 # 복원하는 etcd db파일을 새로운 위치에 설정하는 방식(기본위치가 아님)
 ```
