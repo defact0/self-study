@@ -20,16 +20,12 @@ Solution
    - Name: nginx-pod
    - Image: nginx:alpine
 
-   >  그냥 아래 명령 한줄로 Pod를 만든다.
-
    ```shell
+   # 그냥 아래 명령 한줄로 Pod를 만든다.
    kubectl run nginx-pod --image=nginx:alpine
-   ```
-
-   > 또는,  `nginx-pod.yaml`을 만들지 않고 직접 붙여넣기 해서 pod을 생성하는 방법도 있다.
-
-   ```shell
-root@controlplane:~# cat << EOF | kubectl apply -f -
+   
+   # 또는,  `nginx-pod.yaml`을 만들지 않고 직접 붙여넣기 해서 pod을 생성하는 방법도 있다.
+   root@controlplane:~# cat << EOF | kubectl apply -f -
    > apiVersion: v1
    > kind: Pod
    > metadata:
@@ -49,7 +45,7 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
    pod/nginx-pod created
    root@controlplane:~# 
    ```
-   
+
    
 
 2. Deploy a `messaging` pod using the `redis:alpine` image with the labels set to `tier=msg`.
@@ -59,9 +55,8 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
    - Image: redis:alpine
    - Labels: tier=msg
 
-   > 1번 문제와 동일하나 `labels`를 추가하여 pod를 만드는 문제
-
    ```shell
+   # 1번 문제와 동일하나 `labels`를 추가하여 pod를 만드는 문제
    kubectl run messaging --image=redis:alpine --labels=tier=msg
    ```
 
@@ -71,9 +66,8 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
 
    - Namespace: apx-x9984574
 
-   > 네임스페이스는 create 명령을 사용하여 만든다.
-
    ```shell
+   # 네임스페이스는 create 명령을 사용하여 만든다.
    kubectl create namespace apx-x9984574
    ```
 
@@ -81,9 +75,8 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
 
 4. Get the list of nodes in JSON format and store it in a file at `/opt/outputs/nodes-z3444kd9.json`.
 
-   > JSON 포맷은 `-o json` 옵션을 통해 출력 할 수 있고 이것을 리눅스의 출력 리다이렉션을 통해 특정 파일에 저장을 하는 문제
-
    ```shell
+   # JSON 포맷은 `-o json` 옵션을 통해 출력 할 수 있고 이것을 리눅스의 출력 리다이렉션을 통해 특정 파일에 저장을 하는 문제
    kubectl get nodes -o json > /opt/outputs/nodes-z3444kd9.json
    ```
 
@@ -96,11 +89,12 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
    - Type: ClusterIp
    - Use the right labels
 
-   > 기존에 생성된 messaging pod에 messaging-service 이라는 이름의 Service 리소스를 설정하기 ([참고](https://kubernetes.io/ko/docs/tutorials/stateless-application/expose-external-ip-address/))
-
    ```shell
+   # 기존에 생성된 messaging pod에 messaging-service 이라는 이름의 Service 리소스를 설정하기
    kubectl expose pod messaging --port=6379 --name messaging-service
    ```
+
+   - [참고](https://kubernetes.io/ko/docs/tutorials/stateless-application/expose-external-ip-address/)
 
    
 
@@ -111,11 +105,11 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
    - Image: kodekloud/webapp-color
    - Replicas: 2
 
-   > kubectl create deployment hr-web-app --image=kodekloud/webapp-color --replicas=2
-
-   아래는 udemy 풀이
-
    ```yaml
+   # 풀이1
+   kubectl create deployment hr-web-app --image=kodekloud/webapp-color --replicas=2
+   
+   # 풀이2
    cat << EOF | kubectl apply -f -
    apiVersion: apps/v1
    kind: Deployment
@@ -152,9 +146,8 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
      Name: static-busybox
    - Image: busybox
 
-   > 이거는 어떻게 풀든지 오답으로 채점되는 것 같다.
-
    ```shell
+   # 이거는 어떻게 풀든지 오답으로 채점되는 것 같다.
    kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -oyaml --command -- sleep 1000 > ./static-busybox.yaml
    
    kubectl apply -f static-busybox.yaml
@@ -228,10 +221,8 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
     - Port: 8080
     - NodePort: 30082
 
-    > 공식 홈페이지에서 `nodePort`로 검색하여 해결
-
     ```yaml
-    cat << EOF | kubectl apply -f -
+cat << EOF | kubectl apply -f -
     apiVersion: v1
     kind: Service
     metadata:
@@ -252,7 +243,7 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
       loadBalancer: {}
     EOF
     ```
-
+    
     
 
 11. Use JSON PATH query to retrieve the `osImage`s of all the nodes and store it in a file `/opt/outputs/nodes_os_x43kj56.txt`.
@@ -292,8 +283,6 @@ root@controlplane:~# cat << EOF | kubectl apply -f -
     - Access modes: ReadWriteMany
     - Host Path: /pv/data-analytics
 
-    > 공식 홈페이지에서 `hostPath`를 검색하여 작성함
-    
     ```yaml
     cat << EOF | kubectl apply -f -
     apiVersion: v1

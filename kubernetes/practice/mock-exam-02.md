@@ -19,10 +19,9 @@ Solution
 
    - Backup Completed
 
-   > etcd 클러스터를 백업하고 요구하는 경로에 저장해라
-   >
-   > - 공식 홈페이지에 검색하여 참고하자 ([링크](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#snapshot-using-etcdctl-options))
-
+   - etcd 클러스터를 백업하고 요구하는 경로에 저장해라
+     - 공식 홈페이지에 검색하여 참고하자 ([링크](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#snapshot-using-etcdctl-options))
+   
    ```shell
    # 솔루션 영상에서 나온 /etc/kubernetes/manifests/etcd.yaml 파일내용이랑 시뮬레이션이랑 내용이 다르다
    cat /etc/kubernetes/manifests/etcd.yaml
@@ -39,16 +38,16 @@ Solution
    # etcd.yaml에 나온 정보와 공식 홈페에지에 있는 Snapshot using etcdctl options 내용을 참고해서 백업을 한다
    ETCDCTL_API=3 etcdctl snapshot save --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --endpoints=127.0.0.1:2379 /opt/etcd-backup.db
    ```
-
    
-
+   
+   
 2. Create a Pod called `redis-storage` with image: `redis:alpine` with a Volume of type `emptyDir` that lasts for the life of the Pod.
 
    - Pod named 'redis-storage' created
    - Pod 'redis-storage' uses Volume type of emptyDir
    - Pod 'redis-storage' uses volumeMount with mountPath = /data/redis
 
-   > emptyDir를 사용하는 Pod을 만들고 관련된 조건은 문제를 참고해라
+   - **<u>emptyDir를 사용하는 Pod을 만들고 관련된 조건은 문제를 참고해라</u>**
 
    ```yaml
    cat << EOF | kubectl apply -f -
@@ -86,12 +85,14 @@ Solution
    - Container Image: busybox:1.28
    - SYS_TIME capabilities for the conatiner?
 
-   > 위 조건에 맞게 Pod를 만들어라
-   >
-   > - `system_time` 이라는 단어를 보고 `securityContext`를 연상해야 할 듯
-   > - `capabilities`를 찾아 Pod를 작성해야 한다. ([링크](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container))
-   > - `command`옵션을 잊지말고 추가 해야 한다.
-   >   위에 링크된 페이지에서 command 키워드 검색하면 어떻게 입력하는지 찾아 볼 수 있다.
+   
+
+   **위 조건에 맞게 Pod를 만들어라**
+
+   - `system_time` 이라는 단어를 보고 `securityContext`를 연상해야 할 듯
+   - `capabilities`를 찾아 Pod를 작성해야 한다. ([링크](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container))
+   - `command`옵션을 잊지말고 추가 해야 한다.
+     위에 링크된 페이지에서 command 키워드 검색하면 어떻게 입력하는지 찾아 볼 수 있다.
 
    ```yaml
    # super-user-pod 를 생성
@@ -125,11 +126,13 @@ Solution
    - pod using the correct mountPath
    - pod using the persistent volume claim?
 
-   > Pod의 설정을 확인하고 PVC에 관련되어 오류가 없는지 확인해라
-   >
-   > 1) pv 확인
-   > 2) pvc 확인
-   > 3) pod 확인
+   
+
+   **Pod의 설정을 확인하고 PVC에 관련되어 오류가 없는지 확인해라**
+
+   - pv 확인
+   - pvc 확인
+   - pod 확인
 
    ```shell
    # PV가 있는지 확인한다.
@@ -198,9 +201,9 @@ Solution
    - Task: Upgrade the version of the deployment to 1:17
    - Task: Record the changes for the image upgrade
 
-   > nginx-deploy 이름으로 deployment 작업해라 그리고 nginx 버전업을 하는 rolling update를 수행해라
-   >
-   > [중요] deployment 작업은 `--record` 옵션을 반드시  써야 한다.
+   **nginx-deploy 이름으로 deployment 작업해라 그리고 nginx 버전업을 하는 rolling update를 수행해라**
+   
+   - [중요] deployment 작업은 `--record` 옵션을 반드시  써야 한다.
 
    ```shell
    
@@ -253,101 +256,100 @@ Solution
    - Role Name: developer, namespace: development, Resource: Pods
    - Access: User 'john' has appropriate permissions
 
-   > 1. 디렉토리에 john.csr  john.key 파일이 있는지 확인
-   >
-   > 2. kubectl api-version 체크
-   >
-   >    ```shell
-   >    kubectl api-versions | grep certif
-   >    # certificates.k8s.io/v1
-   >    # certificates.k8s.io/v1beta1
-   >    ```
-   >
-   > 3. 공식문서 [참고](https://kubernetes.io/ko/docs/tasks/tls/managing-tls-in-a-cluster/#%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-api%EB%A1%9C-%EB%B3%B4%EB%82%BC-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%9C%EB%AA%85-%EC%9A%94%EC%B2%AD-%EA%B0%9D%EC%B2%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0)
-   >
-   >    1. `john.yaml`파일 생성 후 공식문서의 예제를 붙여 넣기
-   >
-   >    ```yaml
-   >    apiVersion: certificates.k8s.io/v1
-   >    kind: CertificateSigningRequest
-   >    metadata:
-   >      name: john-developer
-   >    spec:
-   >      signerName: kubernetes.io/kube-apiserver-client
-   >      request: <base64처리한 값>
-   >      usages:
-   >      - digital signature
-   >      - key encipherment
-   >      - client auth
-   >      groups:
-   >      - system:authenticated
-   >    ```
-   >
-   > 4. john.csr의 base64 변환 값 출력
-   >
-   >    ```shell
-   >    cat john.csr | base64 | tr -d "\n"
-   >    LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1ZEQ0NBVHdDQVFBd0R6RU5NQXNHQTFVRUF3d0VhbTlvYmpDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRApnZ0VQQURDQ0FRb0NnZ0VCQU01LzhaZS9nMDA1UkJTWWZMelpFcFF1Y2RXUUlLenpBeWdlOVRLRW9HbjRxWVE4Cjh5MUFRTGpxVWhVVnd4V0ZyeXl5OTFvQm5GY0xuRE1VQnRlcUVRM01Qd0xjeHN1aExHSXhlWHRMek0rZGZQQ2MKeSs2UXYzSk1aWDJJVXEwMUZqSDJ6Y3Y2OEVqVENvblFEdU12ZDlBcFVjZVB5RFIrTHhIZTFlc2tRbW1qdlRFYgpaM0Q3YXA2cmhEc242NW1WRUhxU1p5K3RIZ2VmVGNrc2FFOEhIMG5SeE9nWU9PM1JScnBpYzRwMUg4TWxDbGpxCkZoWityczFHdFRuZU9TVXBQdDNGR0o0aThnNmZaV3RmM3lmZXQ5Z1FNRGlOc3ZiRFVpMFBpSWhyL1pGbnRHN00KRlBSQmIrZnVGZW1US1lObUhkWFhwZFdGMGxzSE9OMHo3VjFUS1FjQ0F3RUFBYUFBTUEwR0NTcUdTSWIzRFFFQgpDd1VBQTRJQkFRREhKRm5LSkNxQ1B3bHZEQ2h6K2x3RlpCYjdTT1ZKUXFuR3c3QkhtanVhTFhPdlhkcW0yMko5CmdObTlTRSt4ZXNMV1dyeEtsTDJqYUFubm5Vd0loTGpYMGpRNDZZUVVSR29DUUVjRHkvWXp0aW5rV0IrcFJnUlUKcmtPMVhUdmRCUHFQRFBqazBFemthMzlGRFhrN2duSXNCbUJ3K0tuZm9tOG1GNHBVc0JYTDVNeW1GNk5vcitYdwpuTC90QlhzNWh6aTVPT2N6Q3g1SmZ6ZEhUaWttdE9XMG9pZUdjQmo0dUx5MmZsaWMwOFdrMzRvS2NmNWtSZGRWCk1zdEhvNmIxTDZjYVA4cGQySjg2RVlzZGhkdnM1Mm5sajUzeEJxWHRvazRaR0lJZVN4TkF2T3k4MUZpRTBFMDUKL0Z6eXJDODZNTFZDM0JrWlc2QmU0c1VjM0NVUWtIc0IKLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==
-   >    ```
-   >
-   >    
-   >
-   > 5. john.yaml 파일에 base64 내용 추가하기
-   >
-   > 6. yaml 적용하기
-   >
-   >    ```shell
-   >    kubectl apply -f john.yaml
-   >    ```
-   >
-   > 7. create 확인 및 certificate approve 하기
-   >
-   >    ```shell
-   >    kubectl get csr
-   >    # NAME             CONDITION
-   >    # john-developer   Pending
-   >    
-   >    kubectl certificate approve john-developer
-   >    # certificatesigningrequest.certificates.k8s.io/john-developer approved
-   >    
-   >    kubectl get csr
-   >    # NAME             CONDITION
-   >    # john-developer   Approved,Issued
-   >    ```
-   >
-   > 8. Role & Rolebinding 추가하기
-   >
-   >    ```shell
-   >    # create role = developer
-   >    kubectl create role developer --resource=pods --verb=create,list,get,update,delete --namespace=development
-   >    
-   >    # create rolebinding = developer-role-binding
-   >    kubectl create rolebinding developer-role-binding --role=developer --user=john --namespace=development
-   >    
-   >    # 추가된 결과 확인
-   >    kubectl -n development describe rolebindings.rbac.authorization.k8s.io developer-role-binding 
-   >    # Name:         developer-role-binding
-   >    # Labels:       <none>
-   >    # Annotations:  <none>
-   >    # Role:
-   >    #   Kind:  Role
-   >    #   Name:  developer
-   >    # Subjects:
-   >    #   Kind  Name  Namespace
-   >    #   ----  ----  ---------
-   >    #   User  john  
-   >    ```
-   >
-   >    
-   >
-   > 9.  권한 체크하기
-   >
-   >    ```shell
-   >    kubectl auth can-i update pods --as=john --namespace=development
-   >    # yes
-   >    ```
-   >
-   >    
+   1. 디렉토리에 john.csr  john.key 파일이 있는지 확인
+
+   2. kubectl api-version 체크
+
+      ```shell
+      kubectl api-versions | grep certif
+      # certificates.k8s.io/v1
+      # certificates.k8s.io/v1beta1
+      ```
+
+   3. 공식문서 [참고](https://kubernetes.io/ko/docs/tasks/tls/managing-tls-in-a-cluster/#%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-api%EB%A1%9C-%EB%B3%B4%EB%82%BC-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%9C%EB%AA%85-%EC%9A%94%EC%B2%AD-%EA%B0%9D%EC%B2%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+
+      1. `john.yaml`파일 생성 후 공식문서의 예제를 붙여 넣기
+
+      ```yaml
+      apiVersion: certificates.k8s.io/v1
+      kind: CertificateSigningRequest
+      metadata:
+        name: john-developer
+      spec:
+        signerName: kubernetes.io/kube-apiserver-client
+        request: <base64처리한 값>
+        usages:
+        - digital signature
+        - key encipherment
+        - client auth
+      ```
+
+      - `spec.signerName` 은 반드시 설정을 해야 하는 항목 중에 하나이며, `kubernetes.io/kube-apiserver-client` 으로 설정한다.
+      - `spec.usages` 부분에 `client auth` 은 반드시 확인해서 입력해야 한다. 공식문서에는 `server auth`로 되어 있어 그냥 복사해서 적용했다가는 csr condition 부분에서 승인이 됐어도 상태가 Issued fail로 출력된다.
+
+   4. john.csr의 base64 변환 값 출력
+
+      ```shell
+      cat john.csr | base64 | tr -d "\n"
+      LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1ZEQ0NBVHdDQVFBd0R6RU5NQXNHQTFVRUF3d0VhbTlvYmpDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRApnZ0VQQURDQ0FRb0NnZ0VCQU01LzhaZS9nMDA1UkJTWWZMelpFcFF1Y2RXUUlLenpBeWdlOVRLRW9HbjRxWVE4Cjh5MUFRTGpxVWhVVnd4V0ZyeXl5OTFvQm5GY0xuRE1VQnRlcUVRM01Qd0xjeHN1aExHSXhlWHRMek0rZGZQQ2MKeSs2UXYzSk1aWDJJVXEwMUZqSDJ6Y3Y2OEVqVENvblFEdU12ZDlBcFVjZVB5RFIrTHhIZTFlc2tRbW1qdlRFYgpaM0Q3YXA2cmhEc242NW1WRUhxU1p5K3RIZ2VmVGNrc2FFOEhIMG5SeE9nWU9PM1JScnBpYzRwMUg4TWxDbGpxCkZoWityczFHdFRuZU9TVXBQdDNGR0o0aThnNmZaV3RmM3lmZXQ5Z1FNRGlOc3ZiRFVpMFBpSWhyL1pGbnRHN00KRlBSQmIrZnVGZW1US1lObUhkWFhwZFdGMGxzSE9OMHo3VjFUS1FjQ0F3RUFBYUFBTUEwR0NTcUdTSWIzRFFFQgpDd1VBQTRJQkFRREhKRm5LSkNxQ1B3bHZEQ2h6K2x3RlpCYjdTT1ZKUXFuR3c3QkhtanVhTFhPdlhkcW0yMko5CmdObTlTRSt4ZXNMV1dyeEtsTDJqYUFubm5Vd0loTGpYMGpRNDZZUVVSR29DUUVjRHkvWXp0aW5rV0IrcFJnUlUKcmtPMVhUdmRCUHFQRFBqazBFemthMzlGRFhrN2duSXNCbUJ3K0tuZm9tOG1GNHBVc0JYTDVNeW1GNk5vcitYdwpuTC90QlhzNWh6aTVPT2N6Q3g1SmZ6ZEhUaWttdE9XMG9pZUdjQmo0dUx5MmZsaWMwOFdrMzRvS2NmNWtSZGRWCk1zdEhvNmIxTDZjYVA4cGQySjg2RVlzZGhkdnM1Mm5sajUzeEJxWHRvazRaR0lJZVN4TkF2T3k4MUZpRTBFMDUKL0Z6eXJDODZNTFZDM0JrWlc2QmU0c1VjM0NVUWtIc0IKLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==
+      ```
+
+   
+
+   5. john.yaml 파일에 base64 내용 추가하기
+
+   6. yaml 적용하기
+
+      ```shell
+      kubectl apply -f john.yaml
+      ```
+
+   7. create 확인 및 certificate approve 하기
+
+      ```shell
+      kubectl get csr
+      # NAME             CONDITION
+      # john-developer   Pending
+      
+      kubectl certificate approve john-developer
+      # certificatesigningrequest.certificates.k8s.io/john-developer approved
+      
+      kubectl get csr
+      # NAME             CONDITION
+      # john-developer   Approved,Issued
+      ```
+
+   8. Role & Rolebinding 추가하기
+
+      ```shell
+      # create role = developer
+      kubectl create role developer --resource=pods --verb=create,list,get,update,delete --namespace=development
+      
+      # create rolebinding = developer-role-binding
+      kubectl create rolebinding developer-role-binding --role=developer --user=john --namespace=development
+      
+      # 추가된 결과 확인
+      kubectl -n development describe rolebinding developer-role-binding 
+      # Name:         developer-role-binding
+      # Labels:       <none>
+      # Annotations:  <none>
+      # Role:
+      #   Kind:  Role
+      #   Name:  developer
+      # Subjects:
+      #   Kind  Name  Namespace
+      #   ----  ----  ---------
+      #   User  john  
+      ```
+
+   
+
+   9. 권한 체크하기
+
+      ```shell
+      kubectl auth can-i update pods --as=john --namespace=development
+      # yes
+      ```
 
    
 
@@ -406,11 +408,12 @@ Solution
    
    # kubelet 상태로 config.yaml 파일 찾기
    systemctl status kubelet
-   # --config=/var/lib/kubelet/config.yaml 을 찾을 수 있다
+   # CGroup: /system.slice/kubelet.service 부분 아래에 
+   # --config=/var/lib/kubelet/config.yaml 정보를 확인할 수 있다.
    
-   # config.yaml에 staticPodPath 필드가 없으면 추가
-   # 위치는 /etc/kubernetes/manifests/ 이다.
    vi /var/lib/kubelet/config.yaml
+   # config.yaml 파일을 열어 staticPodPath 항목이 있는지 확인한다.
+   # 만일 없다면 staticPodPath: /etc/kubernetes/manifests/ 를 추가한다.
    
    # master 노드에서 전송했던 static.yaml 파일을 manifests 으로 복사한다.
    cp /root/static.yaml /etc/kubernetes/manifests/
@@ -420,6 +423,9 @@ Solution
    
    # master 노드로 돌아와 pod 상태를 확인한다.
    kubectl get pods
+   
+   # 만일 static pod가 생성되지 않는다면 node01에서 다음 명령어를 수행한다.
+   systemctl restart kubelet
    ```
    
    
