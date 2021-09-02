@@ -215,12 +215,16 @@ Solution
    - Fix /root/CKA/super.kubeconfig
 
    ```shell
+   ## 설정된 포트번호를 확인한다.
+   kubectl cluster-info
+   
+   ## 새로운 kubeconfig 파일을 수정한다.
    vi /root/CKA/super.kubeconfig
+   ## Change the 9999 port to 6443
    
-   Change the 2379 port to 6443 and run the below command to verify
    
-   kubectl cluster-info --kubeconfig=/root/CKA/super.kubeconfig     
-   
+   ## 수정된 kubeconfig 파일을 연결한다.
+   kubectl cluster-info --kubeconfig=/root/CKA/super.kubeconfig
    ```
 
    
@@ -230,9 +234,20 @@ Solution
    - deployment has 3 replicas
 
    ```shell
-   sed -i 's/kube-contro1ler-manager/kube-controller-manager/g' kube-controller-manager.yaml
+   ## nginx-deploy의 replicas 값을 변경한다.
+   kubectl scale deploy nginx-deploy --replicas=3
+   
+   ## 적용되지 않는 원인을 찾는다.
+   kubectl get pods -n kube-system
+   
+   ## kube-controller 리소스의 이름이 잘못되어 있어 동작이 안되었으니 해당 파일을 수정해야 한다.
+   ## 파일 위치는 /etc/kubernetes/manifests/kube-controller-manager.yaml 이다
+   sed -i 's/kube-contro1ler-manager/kube-controller-manager/g' /etc/kubernetes/manifests/kube-controller-manager.yaml
+   
+   ## deploy를 확인한다.
+   kubectl get deploy
    ```
-
+   
    
 
 
