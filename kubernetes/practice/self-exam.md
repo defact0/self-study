@@ -431,5 +431,52 @@ kubectl describe svc http-go-svc
   - 클라우드 서비스의 리소스를 통해 사용가능
 - Ingress: 하나의 IP 주소를 통해 여러 서비스를 제공하는 특별한 메커니즘
 
+```shell
+# 서비스 추가 (nodeport)
+cat << EOF | kubectl apply -f -
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-go-np
+spec:
+  type: NodePort
+  selector:
+    run: http-go
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30001
+EOF
+# spec.type: NodePort 를 설정하지 않으면 클러스터IP로 설정된다.
+# nodePort 설정을 안하면 자동으로 설정한다.
+
+kubectl get svc
+# EXTERNAL-IP가 <none> 이다. NODE의 IP를 통해 포트로 접근
+kubectl get nodes -o wide
+
+```
+
+**LoadBalancer**
+
+```shell
+# 서비스 추가 (LoadBalancer)
+cat << EOF | kubectl apply -f -
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-go-lb
+spec:
+  type: LoadBalancer
+  selector:
+    run: http-go
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+EOF
+
+# 클라우드 서비스의 부하 분산(네트워크 서비스) 서비스를 활용해야 한다.
+```
+
 
 

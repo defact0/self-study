@@ -523,17 +523,24 @@ DNS도 디렉터리 서비스의 일종, DNS는 도메인 이름으로 IP 주소
 - L4 = TCP, UDP 기반
 - L7 = HTTP, HTTPS, FTP 기반
 
-동작 알고리즘
+동작 알고리즘 ([참고](https://dev.classmethod.jp/articles/load-balancing-types-and-algorithm/))
 
-- Round Robin
+- 라운드 로빈 방식(Round Robin)
   - 요청을 순서대로 돌아가며 배정
   - 세션이 오래 지속되지 않는 경우 적합
-- 최소 리스폰 타임
-  - 가장 짧은 응답시간을 보이는 서버에 우선 배정
-  - 세션이 길어지는 경우 적합
-- IP 해시 방식
-  - IP주소를 특정 서버로 매핑하여 요청 처리
-  - 항상 같은 서버로 연결 보장
+- 가중 라운드 로빈 방식
+  - 실제 서버에 서로 다른 처리 용량을 지정할 수 있다.
+  - 각 서버에 가중치를 부여할 수 있다.
+- 최소 연결 방식
+  - 연결 수가 가장 적은 서버에 네트워크 연결방향을 정한다.
+  - 동적인 분산 알고리즘
+
+로드 밸런싱의 종류는 OSI 7계층에 따라 나뉩니다.
+
+- L4 : Transport 계층을 사용, IP 주소와 포트 번호 부하 분산이 가능
+- L7 : Application 계층을 사용, URL 또는 HTTP 헤더에서 부하 분산이 가능
+
+![OSI7](https://cdn-ssl-devio-img.classmethod.jp/wp-content/uploads/2021/06/434.png)
 
 ---
 
