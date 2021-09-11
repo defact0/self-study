@@ -607,3 +607,125 @@ Secret 활용
 
   - `fieldPath`는 Pod의 메타데이터 필드를 지정
 
+---
+
+**Pod**
+
+> Container, Label, NodeSchedule
+
+Pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+spec:
+  containers:
+  - name: container1
+    image: kubetm/p8000
+    ports:
+    - containerPort: 8000
+  - name: container2
+    image: kubetm/p8080
+    ports:
+    - containerPort: 8080
+```
+
+ReplicationController
+
+```shell
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: replication-1
+spec:
+  replicas: 1
+  selector:
+    app: rc
+  template:
+    metadata:
+      name: pod-1
+      labels:
+        app: rc
+    spec:
+      containers:
+      - name: container
+        image: kubetm/init
+```
+
+[Label] Pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-2
+  labels:
+    type: web
+    lo: dev
+spec:
+  containers:
+  - name: container
+    image: kubetm/init
+```
+
+[Label] Serivce
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-1
+spec:
+  selector:
+    type: web
+  ports:
+  - port: 8080
+```
+
+[Node Schedule] Pod - nodeSelector
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-3
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-node1
+  containers:
+  - name: container
+    image: kubetm/init
+```
+
+- 원하는 노드에 스케쥴링을 하기위해서 `nodeSelector`를 설정한다. 
+
+[Node Schedule] Pod - requests & limits
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-4
+spec:
+  containers:
+  - name: container
+    image: kubetm/init
+    resources:
+      requests:
+        memory: 2Gi
+      limits:
+        memory: 3Gi
+```
+
+- 최소, 최대 container 리소스를 설정한다.
+
+---
+
+kubectl apply vs create 차이
+
+- apply, create 둘다 리소스를 생성 가능
+- create는 이미 이름이 존재하는 Pod를 생성할 수 없다.
+- apply는 이미 이름이 존재하는 Pod를 update 처리 한다.
+

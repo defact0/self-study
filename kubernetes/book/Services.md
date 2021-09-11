@@ -161,3 +161,116 @@ Service 종류
 
 
 
+----
+
+service
+
+> ClusterIP, NodePort, LoadBalancer
+
+ClusterIP
+
+- 서비스 디버깅
+- 내부 트래픽/대쉬보드
+- 인증된 사용자 연결
+- 외부(external)에서 접근 안됨
+- 주로 Admin이 접속한다.
+
+[ClusterIP] Pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+  labels:
+     app: pod
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-node1
+  containers:
+  - name: container
+    image: kubetm/app
+    ports:
+    - containerPort: 8080
+```
+
+[ClusterIP] service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-1
+spec:
+  selector:
+    app: pod
+  ports:
+  - port: 9000
+    targetPort: 8080
+```
+
+- `port` = Service 자체 Port
+- `targetPort` = Pod의 Container Port
+- `spec.selector` = Pod의 Label과 매칭
+- `spec.type` 생략시 ClusterIP으로 자동설정됨
+
+테스트
+
+```shell
+curl 10.104.103.107:9000/hostname
+```
+
+1. `9000`포트로 serivce 리소스 접속
+2. `8080` 포트로 Pod의 Container에 접속
+
+NodePort
+
+- 내부망 시스템 연결
+- 데모나 임시 연결 전용
+- 주로 Internal User 가 사용한다.
+- Node Port의 범위 : 30000~32767
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-2
+spec:
+  selector:
+    app: pod
+  ports:
+  - port: 9000
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort
+  externalTrafficPolicy: Local
+```
+
+
+
+LoadBalancer
+
+- 주로 Cloud Provider 가 사용한다.
+- 외부 시스템 노출용
+- Load Balancer External IP 지원 Plugin (GCP, AWS, Azure, OpenStack)
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-3
+spec:
+  selector:
+    app: pod
+  ports:
+  - port: 9000
+    targetPort: 8080
+  type: LoadBalancer
+```
+
+리소스 확인
+
+```shell
+kubectl get service svc-3
+```
+

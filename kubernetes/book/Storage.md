@@ -224,3 +224,169 @@ MinIO 스토리지
 
 - Object storage 이다. (= AWS의 S3 스토리지도 같은 종류)
 - 오픈소스이고 쿠버네티스에서 동작하며 AWS S3 API와 호환된다.
+
+---
+
+**Volume**
+
+> emptyDir, hostPath, PV/PVC
+
+**emptyDir**
+
+- Pod 생성시 만들어 지고, 삭제시 사라짐
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-1
+spec:
+  containers:
+  - name: container1
+    image: kubetm/init
+    volumeMounts:
+    - name: empty-dir
+      mountPath: /mount1
+  - name: container2
+    image: kubetm/init
+    volumeMounts:
+    - name: empty-dir
+      mountPath: /mount2
+  volumes:
+  - name : empty-dir
+    emptyDir: {}
+```
+
+**hostPath**
+
+- 각 Node의 path 사용
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-3
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k8s-node1
+  containers:
+  - name: container
+    image: kubetm/init
+    volumeMounts:
+    - name: host-path
+      mountPath: /mount1
+  volumes:
+  - name : host-path
+    hostPath:
+      path: /node-v
+      type: DirectoryOrCreate
+```
+
+**PV/PVC**
+
+1. PV 정의 생성
+2. PVC 생성
+3. PV 연결
+4. Pod 생성 시 PVC 마운트
+
+PersistentVolume 
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-03
+spec:
+  capacity:
+    storage: 2G
+  accessModes:
+  - ReadWriteOnce
+  local:
+    path: /node-v
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - {key: kubernetes.io/hostname, operator: In, values: [k8s-node1]}
+```
+
+PersistentVolumeClaim 
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-04
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1G
+  storageClassName: ""
+```
+
+Pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-3
+spec:
+  containers:
+  - name: container
+    image: kubetm/init
+    volumeMounts:
+    - name: pvc-pv
+      mountPath: /mount3
+  volumes:
+  - name : pvc-pv
+    persistentVolumeClaim:
+      claimName: pvc-01
+```
+
+PV-PVC를 label과 selector를 이용해 연결하는 방법
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-03
+  labels:
+    pv: pv-03
+spec:
+  capacity:
+    storage: 2G
+  accessModes:
+  - ReadWriteOnce
+  local:
+    path: /node-v
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - {key: kubernetes.io/hostname, operator: In, values: [k8s-node1]}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-04
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1G
+  storageClassName: ""
+  selector:
+    matchLabels:
+      pv: pv-03
+```
+
+**hostPath Type**[ ](https://kubetm.github.io/k8s/03-beginner-basic-resource/volume/#__hostpath-type__)
+
+- DirectoryOrCreate : 실제 경로가 없다면 생성
+- Directory : 실제 경로가 있어야됨
+- FileOrCreate : 실제 경로에 파일이 없다면 생성
+- File : 실제 파일이 었어야함
