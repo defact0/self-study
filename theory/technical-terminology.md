@@ -158,6 +158,27 @@
 
 ---
 
+<u>**클라우드 배치 모델**</u>
+
+**프라이빗 클라우드 (Private cloud)**
+
+- 이용대상을 제한하는 클라우드 서비스입니다. 
+- 컴퓨팅 자원들이 전적으로 하나의 조직이나 기업에서 사용됩니다.
+
+**퍼블릭 클라우드 (Public cloud)**
+
+- 이용대상을 제한하지 않는 클라우드 서비스입니다.
+- CSP는 모든 하드웨어, 소프트웨어, 스토리지, 네트워크 등을 소유하고 관리합니다. 
+- 그리고 이용자들은 이러한 장비들을 다른 조직이나 기업과 공유합니다.
+
+**하이브리드 클라우드 (Hybrid cloud)**
+
+- 프라이빗 클라우드와 퍼블릭 클라우드를 동시에 사용합니다. 
+- 중요도가 낮고 고용량의 데이터는 퍼블릭 클라우드를 이용하고, 
+  민감하고 중요도가 높은 데이터는 프라이빗을 이용하는 방식입니다.
+
+<u>**클라우드 서비스 모델**</u>
+
 **IaaS (*Infra as a service*)**
 
 > 확장성이 높고 자동화된 컴퓨팅 리소스를 가상화하여 제공
@@ -548,19 +569,16 @@ DNS도 디렉터리 서비스의 일종, DNS는 도메인 이름으로 IP 주소
 | L4          | Transport 계층을 사용   | IP 주소와 포트 번호 부하 분산이 가능    |
 | L7          | Application 계층을 사용 | URL 또는 HTTP 헤더에서 부하 분산이 가능 |
 
-동작 알고리즘 ([참고](https://dev.classmethod.jp/articles/load-balancing-types-and-algorithm/), [참고2](https://m.post.naver.com/viewer/postView.nhn?volumeNo=27046347&memberNo=2521903))
+**동작 알고리즘** ([참고](https://dev.classmethod.jp/articles/load-balancing-types-and-algorithm/), [참고2](https://m.post.naver.com/viewer/postView.nhn?volumeNo=27046347&memberNo=2521903))
 
 - 라운드 로빈 방식(Round Robin)
   - 요청을 순서대로 돌아가며 배정
   - 세션이 오래 지속되지 않는 경우 적합
-- 가중 라운드 로빈 방식 (Weighted Round Robin)
-  - 실제 서버에 서로 다른 처리 용량을 지정할 수 있다.
-  - 각 서버에 가중치를 부여할 수 있다.
 - 최소 연결 방식(Least Connection)
   - 연결 수가 가장 적은 서버에 네트워크 연결방향을 정한다.
   - 동적인 분산 알고리즘
 - 최소 리스폰타임(Least Response Time)
-  - 가장 적인 연결 상태와 가장 짧은 응답시간을 보이는 서버에 우선적으로 로드를 배분
+  - 가장 적은 연결 상태와 가장 짧은 응답시간을 보이는 서버에 우선적으로 로드를 배분
 
 ---
 
@@ -762,9 +780,284 @@ DevOps는 Dev(개발)과 Ops(운영)이 합쳐진 용어입니다.
 
 > Failover에 따라 전환된 서버/시스템/네트워크를 장애 발생전으로 되돌리는 처리
 
-
-
 사람이 직접 작업하는 것을 `스위치오버` 라고 한다.
 
+---
 
+**Nginx**
+
+- Nginx는 웹 서버 소프트웨어로, 가벼움과 높은 성능을 목표로 합니다.
+
+**노드 셀렉터(NodeSelector)**
+
+- Pod의 설정을 통해 특정 노드로 스케쥴링 하도록 한다.
+
+**커든(cordon)**
+
+- 특정 노드에 추가로 파드를 스케쥴링 하지 않게 한다.
+- uncordon 은 cordon 설정을 해제한다.
+
+**드레인(drain)**
+
+- 지정된 노드에 있는 모든 Pod를 정려시키고 스케줄링을 하지 않도록 한다.
+- 해당 노드를 유지보수 할 때 사용한다.
+
+---
+
+**Pod**
+
+- Container
+
+- 라벨&셀렉터(Label&Selector)
+
+  ```log
+  - 리소스 질의 체계
+  - 라벨링 시스템은 key-value 형식의 태그정보
+  - 태깅한 리소스를 찾기 위해 셀렉터를 사용하여 특정 key-value를 가진 리소스만 추출
+  ```
+
+- Readinessprobe
+
+  ```log
+  Pod의 준비 완료를 확인하는 property
+  Jenkins 같은 구동이 오래 걸리는 웹 서비스 확인 용도
+  ```
+
+  
+
+- Livenessprobe
+
+  ```log
+  - Pod가 정상적으로 동작하고 있는지 확인하는 property
+  - 자가치유를 위한 판단 기준
+  ```
+
+  
+
+- Node Affinity
+
+  ```log
+  - 노드의 레이블 기반으로 파드를 스케줄링
+  ```
+
+  
+
+- Pod Affinity/Anti-Affinity
+
+  ```log
+  # 파드 어피니티(Pod Affinity)
+  - 같은 종류의 파드끼리 같은 노드에 스케쥴링 되도록 만든다.
+  
+  # 안티 어피니티(Anti Affinity)
+  - 리소스를 많이 사용하는 Pod를 여러 노드로 분산 시킨다.
+  ```
+
+  
+
+- Toleration/Taint
+
+  ```log
+  - 노드를 특정역할만 하도록 만들 때 사용한다.
+  - 테인트가 적용된 노드에는 파드가 스케쥴러 되지 않는다.
+  - 테인트가 적용된 노드에 파드를 스케쥴링 하려면 톨러레이션을 설정한다.
+  ```
+
+  
+
+**Service**
+
+- ClusterIP
+
+  ```log
+  - 디폴트 설정, 서비스에 클러스터(내부)IP를 할당.
+  - 내부에서만 사용가능하고 외부에서는 접근 불가능
+  ```
+
+  
+
+- NodePort
+
+  ```log
+  - 노드의 자체 포트를 사용하여 포드로 리다이렉션하여 서비스 노출을 한다.
+  - 도커 컨테이너 포트 매핑과 비슷함
+  ```
+
+  
+
+- Endpoint
+
+  ```log
+  - 클러스터내에서 통신을 위해 어디서든 접근 가능한 서비스 끝점(Service Endpoint)가 필요
+  - 서비스 끝점(Service Endpoint)를 통해 다른 컨테이너와 통신 가능
+  ```
+
+  
+
+- ExternalName
+
+  ```log
+  - 외부 DNS 주소에 클러스터 내부에서 사용할 별칭을 만든다.
+  - ExternalName은 쿠버네티스 클러스터에 편입되지 않는 외부 서비스에 쿠버네티스 네트워킹 기능을 연결하고 싶은 경우 사용
+  ```
+
+  
+
+**Volume**
+
+- emptyDir
+
+  ```log
+  - Pod 내에서 임시로 생성하는 스토리지
+  - Pod가 삭제되면 emptyDir volume도 같이 삭제된다.
+  ```
+
+  
+
+- hostPath
+
+  ```log
+  - 호스트 서버에서 연결될 path
+  ```
+
+  
+
+- PV/PVC
+
+  ```log
+  # PersistentVolume (PV)
+  - 데이터 저장소 추상화 시킨 리소스
+  
+  # PersistentVolumeClaim (PVC)
+  - 사용자가 PV를 요청(claim)하는 리소스
+  ```
+
+  
+
+- StorageClass
+
+  ```log
+  - 관리자가 사용자들에게 제공하는 저장소 종류 (동적 저장소)
+  ```
+
+ConfigMap, Secret
+
+```log
+- 필요한 설정값 및 민감 정보(credentials)를 플랫폼 레벨에서 관리지원
+- ConfigMap 또는 Secret이라는 리소스로 설정들을 관리
+```
+
+Namespace
+
+```log
+클러스터를 논리적으로 분리하는 개념
+```
+
+ResourceQuota
+
+```log
+ 전체 네임스페이스에 대한 제약 설정
+```
+
+LimitRange
+
+```log
+개별 Pod 생성에 관여
+```
+
+
+
+**Authorization**
+
+- 역할 기반 접근 제어(RBAC)
+
+- Role
+
+  ```log
+  어떤 권한을 소유하고 있는지
+  ```
+
+- RoleBinding
+
+  ```log
+  Role과 Subject의 연결(Binding)
+  ```
+
+  
+
+---
+
+Replication Controller, ReplicaSet
+Template, Replicas, Selector
+
+**Deployment**
+
+- Recreate
+
+  ```log
+  기존 파드를 모두 삭제한 다음 새로운 파드를 생성하는 방법이다(이 방식은 무중단이 아니다)
+  ```
+
+  
+
+- RollingUpdate
+
+  ```log
+  Pod를 하나씩 죽이고 새로 띄우면서 순차적으로 교체
+  ```
+
+  - 블루-그린 (RollingUpdate의 문제점 해결(신구버전 동시 존재))
+
+    ```log
+    서버를 새버전과 구버전으로 2세트를 마련하고, 이를 한꺼번에 교체하는 방법이다
+    ```
+
+    
+
+DaemonSet
+
+- Job
+
+  ```log
+  Job은 하나 이상의 파드가 할당 받은 명령을 모두 수행하고 작업이 잘 종료되어 정상 종료 코드(0)를 받도록 해주는 것이다.
+  ```
+
+- CronJob
+
+  ```log
+  Unix 도구인 cron과 유사하게 지정된 시간/일자에 실행되는 잡을 생성할 수 있다. cron은 대개의 경우 그렇듯 백업을 수행한다든지 이메일을 보낸다든지 하는 데에 사용된다.
+  ```
+
+**Ingress**
+
+```log
+인그레스는 클러스터 외부에서 클러스터 내부 서비스로 HTTP와 HTTPS 경로를 노출한다. 
+트래픽 라우팅은 인그레스 리소스에 정의된 규칙에 의해 컨트롤된다.
+```
+
+**Canary Upgrade**
+
+```log
+신규 버전을 배포할 때 한꺼번에 앱의 전체를 교체하는게 아니라 기존 버전을 유지한 채로 일부 버전만 신규 버전으로 올려서 신규 버전에 버그나 이상은 없는지를 사용자 반응은 어떤지 확인
+```
+
+
+
+**AutoScaler** 
+
+- HPA
+
+  ```log
+  HPA(HorizontalPodAutoscaler)는 CPU, Memory 등 리소스가 정해둔 임계치를 초과할 경우 자동으로 스케일 아웃(Pod의 리소스를 증가 시키지 않고, Pod 개수 자체를 늘려줌) 해주는 기능을 갖추고 있습니다. HPA 컨트롤러가 리소스를 체크하며 정해둔 replicas 수에 맞춰 Pod를 줄이거나 늘려줍니다.
+  ```
+
+  
+
+- VPA
+
+  ```log
+  Vertical Pod Autoscaler (VPA)는
+  기존 Pod에 CPU나 메모리를 조정하여 오토스케일하는 방법이다.
+  다만 오토스케일시, 해당 파드는 새로운 리소스를 받아 재시작합니다.
+  VPA는 OOM에러가 발생하였을때도 반응하여 오토스케일할 수 있습니다.
+  ```
 
